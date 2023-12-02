@@ -1,0 +1,6 @@
+.center-row {
+    width: auto;
+    justify-content: center;
+    align-items: center;
+    text-align: center !important;
+}

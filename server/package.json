@@ -1,0 +1,16 @@
+{
+    "scripts": {
+        "dev": "nodemon src/config/server.js",
+        "start": "node --max-http-header-size=100000 src/config/server.js",
+        "build": "cd client && npm install && npm run build",
+        "start-dev": "set ENV_TYPE=dev&& set NODE_ENV=dev&& set ENV_OS=windows&& npm start",
+        "start-dev-linux": "ENV_TYPE=dev NODE_ENV=dev ENV_OS=linux npm start",
+        "set-dev": "set 'ENV_TYPE=dev'",
+        "set-prod": "set 'ENV_TYPE=prod'"
+    },
+    "dependencies": {
+        "cors": "^2.8.5",
+        "express": "^4.18.2",
+        "mysql": "^2.18.1"
+    }
+}
