@@ -27,10 +27,10 @@ class Database{
         }
     }
 
-    async getBoardFromName(name){
+    async getBoardFromTag(tag){
         try {
-            const sql = 'SELECT * FROM boards WHERE name = ?';
-            const results = await db.query(sql, [name]);
+            const sql = 'SELECT * FROM boards WHERE tag = ?';
+            const results = await db.query(sql, [tag]);
             return results.length != 0 ? results[0] : null;
         } catch (err) {
             console.error(err);
@@ -38,10 +38,10 @@ class Database{
         }
     }
 
-    async getBoardThreadsFromName(boardName){
+    async getBoardThreadsFromTag(boardTag){
         try {
-            const sql = 'SELECT * FROM threads A, boards B WHERE B.name = ?';
-            const results = await db.query(sql, [boardName]);
+            const sql = 'SELECT * FROM threads A, boards B WHERE B.tag = ?';
+            const results = await db.query(sql, [boardTag]);
             return results;
         } catch (err) {
             console.error(err);
@@ -49,9 +49,24 @@ class Database{
         }
     }
 
-    async createThread(boardID, title, thumbnailURL = null, userID = null){
-        const sql = 'INSERT INTO threads (board_id, title, user_id, thumbnail_url) VALUES (?,?,?,?)';
-        await db.query(sql, [boardID, title, userID, thumbnailURL]);
+    async createThread(boardID, subject, thumbnailURL = null, userName = 'Anonymous', thumbnailFileName, thumbnailImageID, comment){
+        const sql = 'INSERT INTO threads (board_id, subject, user_name, thumbnail_url, thumbnail_file_name, thumbnail_image_id, comment) VALUES (?,?,?,?,?,?,?)';
+        await db.query(sql, [boardID, subject, userName, thumbnailURL, thumbnailFileName, thumbnailImageID, comment]);
+    }
+
+    async insertImage(fileName, fileType){
+        const sql = 'INSERT INTO images (file_name, file_type) VALUES (?,?)'
+        await db.query(sql, [fileName, fileType]);
+        const sql2 = 'SELECT * FROM images WHERE file_name = ?';
+        const result = await db.query(sql2, [fileName]);
+        console.log('result: ', result);
+        return result.length != 0 ? result[0] : null;
+    }
+
+    async getImageFromID(imageID){
+        const sql = 'SELECT * FROM images WHERE id = ?';
+        const result = await db.query(sql, [imageID]);
+        return result.length != 0 ? result[0] : null;
     }
 }
 

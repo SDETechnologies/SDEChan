@@ -29,8 +29,9 @@ export default function BoardsList(props){
                     ? (
                         boards.map(board => {
                             console.log('board: ', board);
-                            const boardName = '/' + board.name + '/';
-                            const boardLink = '/boards' + boardName;
+                            const boardName = board.name;
+                            const boardTag = '/' + board.tag + '/';
+                            const boardLink = '/' + board.tag;
                             return(
                                 <Row className='center-row'>
                                     <a href={boardLink}>{boardName}</a>
